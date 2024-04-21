@@ -20,13 +20,17 @@ const App = () => {
     },
   ];
 
+  const [searchTerm, setSearchTerm] = React.useState('');
+
   // Callback function introduced as event handler
   const handleSearch = (event) => {
     // Callback function calls back to the place it was introduced
-    console.log(event.target.value);
+    setSearchTerm(event.target.value);
   };
 
-  console.log("App renders.");
+ const searchedStories = stories.filter(function (story) { 
+    return story.title.toLowerCase().includes(searchTerm.toLowerCase());
+  });
 
   return (
     <div>
@@ -37,31 +41,17 @@ const App = () => {
 
       <hr></hr>
 
-      <List list={stories}/>
+      <List list={searchedStories}/>
     </div>
   );
 }
 
 const Search = (props) => {
-  const [searchTerm, setSearchTerm] = React.useState('');
-
-  const handleChange = (event) => {
-    setSearchTerm(event.target.value);
-  }
-
-  const handleBlur = () => {
-    console.log("Input has lost focus.");
-  }
-
-  // Callback function is executed as a handler
-  props.onSearch(event);
-
-  console.log("Search renders.");
-
   return (
     <div>
       <label htmlFor="search">Search: </label>
-      <input id="search" type="text" onChange={handleChange} onBlur={handleBlur}></input>
+      {/* // Callback function is executed as a handler */}
+      <input id="search" type="text" onChange={props.onSearch}></input>
     </div>
   );
 }
