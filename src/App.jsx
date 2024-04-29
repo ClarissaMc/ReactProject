@@ -20,7 +20,12 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState('React');
+  const [searchTerm, setSearchTerm] = React.useState(
+    localStorage.getItem('search') || 'React');
+  
+  React.useEffect(() => {
+    localStorage.setItem('search', searchTerm);
+  }, [searchTerm]);
 
   // Callback function introduced as event handler
   const handleSearch = (event) => {
