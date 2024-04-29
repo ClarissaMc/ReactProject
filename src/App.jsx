@@ -20,7 +20,7 @@ const App = () => {
     },
   ];
 
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = React.useState('React');
 
   // Callback function introduced as event handler
   const handleSearch = (event) => {
@@ -37,7 +37,7 @@ const App = () => {
       <h1>My Hacker Stories</h1>
 
       {/* // Callback function is passed as a function in props */}
-      <Search onSearch={handleSearch}/>
+      <Search search={searchTerm} onSearch={handleSearch}/>
 
       <hr></hr>
 
@@ -46,39 +46,40 @@ const App = () => {
   );
 }
 
-const Search = (props) => {
+const Search = ({ search, onSearch}) => {
   return (
     <div>
       <label htmlFor="search">Search: </label>
       {/* // Callback function is executed as a handler */}
-      <input id="search" type="text" onChange={props.onSearch}></input>
+      <input 
+        id="search"
+        type="text"
+        value={search}
+        onChange={onSearch}>
+      </input>
     </div>
   );
 }
 
-const List = (props) => {
-  console.log("List renders");
-
+const List = ({ list }) => {
   return (
     <ul>
-      {props.list.map((item) => (
-        <Item key={item.objectID} item={item}/>
+      {list.map(({ objectID, ...item }) => (
+        <Item key={objectID} {...item} />
       ))}
     </ul>
   );
 }
 
-const Item = (props) => {
-  console.log("Item renders.");
-
+const Item = ({ title, url, author, num_comments, points }) => {
   return (
     <li>
       <span>
-        <a href={props.item.url}>{props.item.title}</a>
+        <a href={url}>{title}</a>
       </span>
-      <span>{props.item.author}</span>
-      <span>{props.item.num_comments}</span>
-      <span>{props.item.points}</span>
+      <span>{author}</span>
+      <span>{num_comments}</span>
+      <span>{points}</span>
     </li>
   )
 }
