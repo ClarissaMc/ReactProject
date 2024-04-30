@@ -58,9 +58,8 @@ const App = () => {
   );
 }
 
-const Search = ({ search, onSearch}) => {
-  return (
-    <div>
+const Search = ({ search, onSearch}) => (
+    <React.Fragment>
       <label htmlFor="search">Search: </label>
       {/* // Callback function is executed as a handler */}
       <input 
@@ -69,9 +68,8 @@ const Search = ({ search, onSearch}) => {
         value={search}
         onChange={onSearch}>
       </input>
-    </div>
-  );
-}
+    </React.Fragment>
+);
 
 const List = ({ list }) => {
   return (
