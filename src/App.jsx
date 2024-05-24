@@ -1,61 +1,34 @@
 import * as React from 'react';
 
-const setStories = 'SET_STORIES';
-const removeStory = 'REMOVE_STORY';
-const fetchStoriesInit = 'STORIES_FETCH_INIT';
-const fetchStoriesSuccess = 'STORIES_FETCH_SUCCESS';
-const fetchStoriesFailure = 'STORIES_FETCH_FAILURE';
+const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
 
-const initialStories = [
-  {
-    title: 'React',
-    url: 'https://reactjs.org/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-  },
-  {
-    title: 'Redux',
-    url: 'https://redux.js.org/',
-    author: 'Dan Abramov, Andrew Clark',
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
-  },
-];
-
-const getAsyncStories = () => 
-  new Promise((resolve) => 
-    // adding delay to mimic asynch data retrieval
-    setTimeout(
-      () => resolve({ data: { stories: initialStories }}),
-      2000
-    )
-  );
+const REMOVE_STORY = 'REMOVE_STORY';
+const STORIES_FETCH_INIT = 'STORIES_FETCH_INIT';
+const STORIES_FETCH_SUCCESS = 'STORIES_FETCH_SUCCESS';
+const STORIES_FETCH_FAILURE = 'STORIES_FETCH_FAILURE';
 
 const storiesReducer = (state, action) => {
   switch (action.type) {
-    case fetchStoriesInit:
+    case STORIES_FETCH_INIT:
       return {
         ...state,
         isLoading: true,
         isError: false,
       };
-    case fetchStoriesSuccess:
+    case STORIES_FETCH_SUCCESS:
       return {
         ...state,
         isLoading: false,
         isError: false,
         data: action.payload,
       };
-    case fetchStoriesFailure:
+    case STORIES_FETCH_FAILURE:
       return {
         ...state,
         isLoading: false,
         isError: true,
       };
-    case removeStory:
+    case REMOVE_STORY:
       return {
         ...state,
         data: state.data.filter(
@@ -89,23 +62,24 @@ const App = () => {
   );
 
   React.useEffect(() => {
-    dispatchStories({ type: fetchStoriesInit });
+    dispatchStories({ type: STORIES_FETCH_INIT });
 
-    getAsyncStories()
-      .then(result => {
+    fetch(`${API_ENDPOINT}react`)
+      .then((response) => response.json())
+      .then((result) => {
         dispatchStories({
-          type: fetchStoriesSuccess,
-          payload: result.data.stories,
+          type: STORIES_FETCH_SUCCESS,
+          payload: result.hits,
         });
       })
-      .catch(() => 
-        dispatchStories({ type: fetchStoriesFailure })
-      );
+      .catch(() => {
+        dispatchStories({ type: STORIES_FETCH_FAILURE })
+      });
   }, []); // Empty dependecy array means side-effect only runs once component renders for first time
 
   const handleRemoveStory = (item) => {
     dispatchStories({
-      type: removeStory,
+      type: REMOVE_STORY,
       payload: item,
     });
   };
