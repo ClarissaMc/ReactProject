@@ -62,9 +62,11 @@ const App = () => {
   );
 
   React.useEffect(() => {
+    if (!searchTerm) return;
+
     dispatchStories({ type: STORIES_FETCH_INIT });
 
-    fetch(`${API_ENDPOINT}react`)
+    fetch(`${API_ENDPOINT}${searchTerm}`)
       .then((response) => response.json())
       .then((result) => {
         dispatchStories({
@@ -75,7 +77,7 @@ const App = () => {
       .catch(() => {
         dispatchStories({ type: STORIES_FETCH_FAILURE })
       });
-  }, []); // Empty dependecy array means side-effect only runs once component renders for first time
+  }, [searchTerm]);
 
   const handleRemoveStory = (item) => {
     dispatchStories({
@@ -89,10 +91,6 @@ const App = () => {
     // Callback function calls back to the place it was introduced
     setSearchTerm(event.target.value);
   };
-
- const searchedStories = stories.data.filter(function (story) { 
-    return story.title.toLowerCase().includes(searchTerm.toLowerCase());
-  });
 
   return (
     <div>
@@ -116,7 +114,7 @@ const App = () => {
         <p>Loading...</p>
       ) : (
         <List
-          list={searchedStories}
+          list={stories.data}
           onRemoveItem={handleRemoveStory}
         />
       )}
