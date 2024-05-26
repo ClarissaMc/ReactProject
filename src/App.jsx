@@ -66,20 +66,19 @@ const App = () => {
     { data: [], isLoading: false, isError: false }  // this object is the state, which is named stories
   );
 
-  const handleFetchStories = React.useCallback(() => {
+  const handleFetchStories = React.useCallback(async () => {
     dispatchStories({ type: STORIES_FETCH_INIT });
 
-    axios        // axios is the same as fetch()
-      .get(url)
-      .then((result) => {
-        dispatchStories({
-          type: STORIES_FETCH_SUCCESS,
-          payload: result.data.hits,
-        });
-      })
-      .catch(() => {
-        dispatchStories({ type: STORIES_FETCH_FAILURE })
+    try {
+      const result = await axios.get(url);
+
+      dispatchStories({
+        type: STORIES_FETCH_SUCCESS,
+        payload: result.data.hits,
       });
+    } catch {
+      dispatchStories({ type: STORIES_FETCH_FAILURE });
+    }
   }, [url]);
 
   React.useEffect(() => {
