@@ -45,12 +45,18 @@ const storiesReducer = (state, action) => {
 };
 
 const useStorageState = (key, initialState) => {
+  const isMounted = React.useRef(false);  // prevents initial re-render of component
+
   const [value, setValue] = React.useState(
     localStorage.getItem(key) || initialState
   );
 
   React.useEffect(() => {
-    localStorage.setItem(key, value);
+    if (!isMounted.current) {
+      isMounted.current = true;
+    } else {
+      localStorage.setItem(key, value);
+    }
   }, [value, key]);
 
   return [value, setValue];
@@ -88,23 +94,21 @@ const App = () => {
     handleFetchStories();
   }, [handleFetchStories]);
 
-  const handleRemoveStory = (item) => {
+  const handleRemoveStory = React.useCallback((item) => {
     dispatchStories({
       type: REMOVE_STORY,
       payload: item,
     });
-  };
+  }, []);
 
-  // Callback function introduced as event handler
-  const handleSearchInput = (event) => {
-    // Callback function calls back to the place it was introduced
+  const handleSearchInput = React.useCallback((event) => {
     setSearchTerm(event.target.value);
-  };
+  }, []);
 
-  const handleSearchSubmit = (event) => {
+  const handleSearchSubmit = React.useCallback((event) => {
     setUrl(`${API_ENDPOINT}${searchTerm}`);
     event.preventDefault();
-  };
+  }, []);
 
   return (
     <div className="container">
@@ -130,7 +134,8 @@ const App = () => {
   );
 };
 
-const SearchForm = ({ searchTerm, onSearchInput, onSearchSubmit, }) => (
+const SearchForm = React.memo(
+  ({ searchTerm, onSearchInput, onSearchSubmit, }) => (
   <form onSubmit={onSearchSubmit} className='search-form'>
     <InputWithLabel
       id="search"
@@ -145,7 +150,7 @@ const SearchForm = ({ searchTerm, onSearchInput, onSearchSubmit, }) => (
       Submit
     </button>
   </form>
-);
+));
 
 const InputWithLabel = ({ id, value, type = 'text', onInputChange, isFocused, children, }) => (
   <>
@@ -162,8 +167,8 @@ const InputWithLabel = ({ id, value, type = 'text', onInputChange, isFocused, ch
   </>
 )
 
-const List = ({ list, onRemoveItem }) => {
-  return (
+const List = React.memo(
+  ({ list, onRemoveItem }) => 
     <ul>
       {list.map((item) => (
         <Item 
@@ -172,27 +177,28 @@ const List = ({ list, onRemoveItem }) => {
           onRemoveItem={onRemoveItem} />
       ))}
     </ul>
-  );
-}
+);
 
-const Item = ({ item, onRemoveItem }) => (
-  <li className='item'>
-    <span style={{ width: '40%' }}>
-      <a href={item.url}>{item.title}</a>
-    </span>
-    <span style={{ width: '30%' }}>{item.author}</span>
-    <span style={{ width: '10%' }}>{item.num_comments}</span>
-    <span style={{ width: '10%' }}>{item.points}</span>
-    <span style={{ width: '10%' }}>
-      <button 
-        type="button"
-        onClick={() => onRemoveItem(item)}
-        className="button button_small"
-      >
-        <Check height="18px" width="18px"/>
-      </button>
-    </span>
-  </li>
-)
+const Item = React.memo(
+  ({ item, onRemoveItem }) => (
+    <li className='item'>
+      <span style={{ width: '40%' }}>
+        <a href={item.url}>{item.title}</a>
+      </span>
+      <span style={{ width: '30%' }}>{item.author}</span>
+      <span style={{ width: '10%' }}>{item.num_comments}</span>
+      <span style={{ width: '10%' }}>{item.points}</span>
+      <span style={{ width: '10%' }}>
+        <button 
+          type="button"
+          onClick={() => onRemoveItem(item)}
+          className="button button_small"
+        >
+          <Check height="18px" width="18px"/>
+        </button>
+      </span>
+    </li>
+  )
+);
 
 export default App
