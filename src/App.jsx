@@ -2,7 +2,7 @@ import * as React from 'react';
 import axios from 'axios';
 
 import './App.css';
-import { ReactComponent as Check } from './check.svg';
+import Check from './check.svg?react';
 
 const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
 
