@@ -202,3 +202,5 @@ const Item = React.memo(
 );
 
 export default App
+
+export { storiesReducer, SearchForm, InputWithLabel, List, Item };
