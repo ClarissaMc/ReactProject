@@ -14,6 +14,7 @@ exports[`InputWithLabel > renders snapshot 1`] = `
 exports[`Item > renders snapshot 1`] = `
 <li
   class="item"
+  style="display: flex;"
 >
   <span
     style="width: 40%;"
@@ -77,22 +78,42 @@ exports[`List > renders snapshot 1`] = `
     <span
       style="width: 40%;"
     >
-      Title
+      <button
+        class="button_sort TITLE"
+        type="button"
+      >
+        Title
+      </button>
     </span>
     <span
       style="width: 30%;"
     >
-      Author
+      <button
+        class="button_sort AUTHOR"
+        type="button"
+      >
+        Author
+      </button>
     </span>
     <span
       style="width: 10%;"
     >
-      Comments
+      <button
+        class="button_sort COMMENT"
+        type="button"
+      >
+        Comments
+      </button>
     </span>
     <span
       style="width: 10%;"
     >
-      Points
+      <button
+        class="button_sort POINT"
+        type="button"
+      >
+        Points
+      </button>
     </span>
     <span
       style="width: 10%;"
@@ -102,6 +123,7 @@ exports[`List > renders snapshot 1`] = `
   </li>
   <li
     class="item"
+    style="display: flex;"
   >
     <span
       style="width: 40%;"
@@ -157,6 +179,7 @@ exports[`List > renders snapshot 1`] = `
   </li>
   <li
     class="item"
+    style="display: flex;"
   >
     <span
       style="width: 40%;"

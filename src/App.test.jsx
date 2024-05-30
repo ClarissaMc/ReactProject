@@ -282,12 +282,12 @@ describe('App', () => {
 
         await waitFor(async () => await promise);
 
-        expect(screen.getAllByRole('button').length).toBe(3);
+        expect(screen.getAllByRole('button').length).toBe(7);
         expect(screen.getByText('Jordan Walke')).toBeInTheDocument();
 
-        fireEvent.click(screen.getAllByRole('button')[1]);
+        fireEvent.click(screen.getAllByRole('button')[5]);
 
-        expect(screen.getAllByRole('button').length).toBe(2);
+        expect(screen.getAllByRole('button').length).toBe(6);
         expect(screen.queryByText('Jordan Walke')).toBeNull();
     });
 
