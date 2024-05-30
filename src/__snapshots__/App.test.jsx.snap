@@ -1,0 +1,213 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`InputWithLabel > renders snapshot 1`] = `
+<label
+  class="label"
+  for="search"
+>
+  <strong>
+    Search:
+  </strong>
+</label>
+`;
+
+exports[`Item > renders snapshot 1`] = `
+<li
+  class="item"
+>
+  <span
+    style="width: 40%;"
+  >
+    <a
+      href="https://reactjs.org/"
+    >
+      React
+    </a>
+  </span>
+  <span
+    style="width: 30%;"
+  >
+    Jordan Walke
+  </span>
+  <span
+    style="width: 10%;"
+  >
+    3
+  </span>
+  <span
+    style="width: 10%;"
+  >
+    4
+  </span>
+  <span
+    style="width: 10%;"
+  >
+    <button
+      class="button button_small"
+      type="button"
+    >
+      <svg
+        height="18px"
+        id="Capa_1"
+        style="enable-background: new 0 0 297 297;"
+        viewBox="0 0 297 297"
+        width="18px"
+        x="0px"
+        xml:space="preserve"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        y="0px"
+      >
+        <g>
+          <path
+            d="M113.636,272.638c-2.689,0-5.267-1.067-7.168-2.97L2.967,166.123c-3.956-3.957-3.956-10.371-0.001-14.329l54.673-54.703       c1.9-1.9,4.479-2.97,7.167-2.97c2.689,0,5.268,1.068,7.169,2.969l41.661,41.676L225.023,27.332c1.9-1.901,4.48-2.97,7.168-2.97l0,0       c2.688,0,5.268,1.068,7.167,2.97l54.675,54.701c3.956,3.957,3.956,10.372,0,14.328L120.803,269.668       C118.903,271.57,116.325,272.638,113.636,272.638z M24.463,158.958l89.173,89.209l158.9-158.97l-40.346-40.364L120.803,160.264       c-1.9,1.902-4.478,2.971-7.167,2.971c-2.688,0-5.267-1.068-7.168-2.97l-41.66-41.674L24.463,158.958z"
+          />
+        </g>
+      </svg>
+    </button>
+  </span>
+</li>
+`;
+
+exports[`List > renders snapshot 1`] = `
+<ul>
+  <li
+    class="item"
+  >
+    <span
+      style="width: 40%;"
+    >
+      <a
+        href="https://reactjs.org/"
+      >
+        React
+      </a>
+    </span>
+    <span
+      style="width: 30%;"
+    >
+      Jordan Walke
+    </span>
+    <span
+      style="width: 10%;"
+    >
+      3
+    </span>
+    <span
+      style="width: 10%;"
+    >
+      4
+    </span>
+    <span
+      style="width: 10%;"
+    >
+      <button
+        class="button button_small"
+        type="button"
+      >
+        <svg
+          height="18px"
+          id="Capa_1"
+          style="enable-background: new 0 0 297 297;"
+          viewBox="0 0 297 297"
+          width="18px"
+          x="0px"
+          xml:space="preserve"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          y="0px"
+        >
+          <g>
+            <path
+              d="M113.636,272.638c-2.689,0-5.267-1.067-7.168-2.97L2.967,166.123c-3.956-3.957-3.956-10.371-0.001-14.329l54.673-54.703       c1.9-1.9,4.479-2.97,7.167-2.97c2.689,0,5.268,1.068,7.169,2.969l41.661,41.676L225.023,27.332c1.9-1.901,4.48-2.97,7.168-2.97l0,0       c2.688,0,5.268,1.068,7.167,2.97l54.675,54.701c3.956,3.957,3.956,10.372,0,14.328L120.803,269.668       C118.903,271.57,116.325,272.638,113.636,272.638z M24.463,158.958l89.173,89.209l158.9-158.97l-40.346-40.364L120.803,160.264       c-1.9,1.902-4.478,2.971-7.167,2.971c-2.688,0-5.267-1.068-7.168-2.97l-41.66-41.674L24.463,158.958z"
+            />
+          </g>
+        </svg>
+      </button>
+    </span>
+  </li>
+  <li
+    class="item"
+  >
+    <span
+      style="width: 40%;"
+    >
+      <a
+        href="https://redux.js.org"
+      >
+        Redux
+      </a>
+    </span>
+    <span
+      style="width: 30%;"
+    >
+      Dan Abramov, Andrew Clark
+    </span>
+    <span
+      style="width: 10%;"
+    >
+      2
+    </span>
+    <span
+      style="width: 10%;"
+    >
+      5
+    </span>
+    <span
+      style="width: 10%;"
+    >
+      <button
+        class="button button_small"
+        type="button"
+      >
+        <svg
+          height="18px"
+          id="Capa_1"
+          style="enable-background: new 0 0 297 297;"
+          viewBox="0 0 297 297"
+          width="18px"
+          x="0px"
+          xml:space="preserve"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          y="0px"
+        >
+          <g>
+            <path
+              d="M113.636,272.638c-2.689,0-5.267-1.067-7.168-2.97L2.967,166.123c-3.956-3.957-3.956-10.371-0.001-14.329l54.673-54.703       c1.9-1.9,4.479-2.97,7.167-2.97c2.689,0,5.268,1.068,7.169,2.969l41.661,41.676L225.023,27.332c1.9-1.901,4.48-2.97,7.168-2.97l0,0       c2.688,0,5.268,1.068,7.167,2.97l54.675,54.701c3.956,3.957,3.956,10.372,0,14.328L120.803,269.668       C118.903,271.57,116.325,272.638,113.636,272.638z M24.463,158.958l89.173,89.209l158.9-158.97l-40.346-40.364L120.803,160.264       c-1.9,1.902-4.478,2.971-7.167,2.971c-2.688,0-5.267-1.068-7.168-2.97l-41.66-41.674L24.463,158.958z"
+            />
+          </g>
+        </svg>
+      </button>
+    </span>
+  </li>
+</ul>
+`;
+
+exports[`SearchForm > renders snapshot 1`] = `
+<form
+  class="search-form"
+>
+  <label
+    class="label"
+    for="search"
+  >
+    <strong>
+      Search:
+    </strong>
+  </label>
+   
+  <input
+    class="input"
+    id="search"
+    type="text"
+    value="React"
+  />
+  <button
+    class="button button_large"
+    type="submit"
+  >
+    Submit
+  </button>
+</form>
+`;

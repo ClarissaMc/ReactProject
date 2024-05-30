@@ -127,6 +127,11 @@ describe('Item', () => {
         expect(handleRemoveItem).toHaveBeenCalledTimes(1);
         expect(handleRemoveItem).toHaveBeenCalledWith({...storyOne});
     });
+
+    it('renders snapshot', () => {
+        const { container } = render(<Item item={storyOne} onRemoveItem={vi.fn()}/>);
+        expect(container.firstChild).toMatchSnapshot();
+    });
 });
 
 describe('SearchForm', () => {
@@ -163,6 +168,11 @@ describe('SearchForm', () => {
 
         expect(searchFormProps.onSearchSubmit).toHaveBeenCalledTimes(1);
     });
+
+    it('renders snapshot', () => {
+        const { container } = render(<SearchForm {...searchFormProps}/>);
+        expect(container.firstChild).toMatchSnapshot();
+    });
 });
 
 describe('InputWithLabel', () => {
@@ -192,6 +202,11 @@ describe('InputWithLabel', () => {
 
         expect(inputWithLabelProps.onInputChange).toHaveBeenCalledTimes(1);
     });
+
+    it('renders snapshot', () => {
+        const { container } = render(<InputWithLabel {...inputWithLabelProps}/>);
+        expect(container.firstChild).toMatchSnapshot();
+    });
 });
 
 describe('List', () => {
@@ -206,6 +221,11 @@ describe('List', () => {
         expect(screen.getByText('React')).toBeInTheDocument();
         expect(screen.getByText('Redux')).toBeInTheDocument();
     });
+
+    it('renders snapshot', () => {
+        const { container } = render(<List {...listProps}/>);
+        expect(container.firstChild).toMatchSnapshot();
+    })
 });
 // ------------------------- End Unit Tests --------------------------------- //
 
@@ -348,3 +368,4 @@ describe('App', () => {
         expect(screen.queryByText('Brendan Eich')).toBeInTheDocument();
     });
 });
+// ----------------------- End Integration Tests ---------------------------- //
