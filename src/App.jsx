@@ -138,4 +138,4 @@ const App = () => {
 
 export default App
 
-export { storiesReducer, SearchForm, InputWithLabel, List, Item };
+export { storiesReducer, SearchForm, List };

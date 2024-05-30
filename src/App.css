@@ -54,6 +54,20 @@
     padding: 10px;
 }
 
+.button_sort {
+    background-color: #bef1fa;
+}
+
+.button_sort:hover {
+    background-color: #86b9c2;
+    cursor: pointer;
+}
+
+.active_sort {
+    background-color: #171212;
+    color: #ffffff;
+}
+
 .search-form {
     padding: 10px 0 20px 0;
     display: flex;

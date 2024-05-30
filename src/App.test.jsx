@@ -8,11 +8,12 @@ import {
 
 import App, {
     storiesReducer,
-    Item,
     List,
     SearchForm,
-    InputWithLabel,
 } from './App';
+
+import { Item } from './List';
+import { InputWithLabel } from './InputWithLabel';
 
 import axios from 'axios';
 
