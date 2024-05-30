@@ -1,8 +1,10 @@
 import * as React from 'react';
 import axios from 'axios';
 
+import { SearchForm } from './SearchForm';
+import { List } from './List';
+
 import './App.css';
-import Check from './check.svg?react';
 
 const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
 
@@ -133,73 +135,6 @@ const App = () => {
     </div>
   );
 };
-
-const SearchForm = React.memo(
-  ({ searchTerm, onSearchInput, onSearchSubmit, }) => (
-  <form onSubmit={onSearchSubmit} className='search-form'>
-    <InputWithLabel
-      id="search"
-      value={searchTerm}
-      isFocused
-      onInputChange={onSearchInput}
-    >
-      <strong>Search:</strong>
-    </InputWithLabel>
-
-    <button type="submit" disabled={!searchTerm} className='button button_large'>
-      Submit
-    </button>
-  </form>
-));
-
-const InputWithLabel = ({ id, value, type = 'text', onInputChange, isFocused, children, }) => (
-  <>
-    <label htmlFor={id} className='label'>{children}</label>
-    &nbsp;
-    <input
-      id={id}
-      type={type}
-      value={value}
-      autoFocus={isFocused}
-      onChange={onInputChange}
-      className='input'
-    />
-  </>
-)
-
-const List = React.memo(
-  ({ list, onRemoveItem }) => 
-    <ul>
-      {list.map((item) => (
-        <Item 
-          key={item.objectID}
-          item={item}
-          onRemoveItem={onRemoveItem} />
-      ))}
-    </ul>
-);
-
-const Item = React.memo(
-  ({ item, onRemoveItem }) => (
-    <li className='item'>
-      <span style={{ width: '40%' }}>
-        <a href={item.url}>{item.title}</a>
-      </span>
-      <span style={{ width: '30%' }}>{item.author}</span>
-      <span style={{ width: '10%' }}>{item.num_comments}</span>
-      <span style={{ width: '10%' }}>{item.points}</span>
-      <span style={{ width: '10%' }}>
-        <button 
-          type="button"
-          onClick={() => onRemoveItem(item)}
-          className="button button_small"
-        >
-          <Check height="18px" width="18px"/>
-        </button>
-      </span>
-    </li>
-  )
-);
 
 export default App
 
