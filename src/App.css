@@ -54,8 +54,18 @@
     padding: 10px;
 }
 
+.header > span {
+    position: relative;
+}
+
+.header > span > svg {
+    bottom: 0;
+    position: absolute;
+}
+
 .button_sort {
     background-color: #bef1fa;
+    margin-right: 5px;
 }
 
 .button_sort:hover {

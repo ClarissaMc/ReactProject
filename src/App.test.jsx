@@ -233,20 +233,47 @@ describe('List', () => {
         expect(screen.getByText('Actions')).toBeInTheDocument();
     });
 
-    it('sort buttons fire', () => {
+    it('fires sort buttons', () => {
         const {container } = render(<List {...listProps}/>);
 
         expect(container.getElementsByClassName('active_sort').length).toBe(0);
 
-        fireEvent.click(screen.getAllByRole('button')[1]);  // Title
+        fireEvent.click(screen.getAllByRole('button')[0]);  // Title
 
         expect(container.getElementsByClassName('active_sort').length).toBe(1);
-        expect(container.getElementsByClassName('active_sort')[0].classList.contains('TITLE'));
+        expect(container.getElementsByClassName('active_sort')[0].classList.contains('TITLE')).toBeTruthy();
 
-        fireEvent.click(screen.getAllByRole('button')[2]);  // Author
+        fireEvent.click(screen.getAllByRole('button')[1]);  // Author
 
         expect(container.getElementsByClassName('active_sort').length).toBe(1);
-        expect(container.getElementsByClassName('active_sort')[0].classList.contains('AUTHOR'));
+        expect(container.getElementsByClassName('active_sort')[0].classList.contains('AUTHOR')).toBeTruthy();
+    });
+
+    it('renders sort arrows', () => {
+        render(<List {...listProps}/>);
+
+        expect(screen.queryByTitle('down-arrow')).toBeNull();
+        expect(screen.queryByTitle('up-arrow')).toBeNull();
+
+        fireEvent.click(screen.getAllByRole('button')[0]);  // Title
+
+        expect(screen.queryByTitle('down-arrow')).toBeInTheDocument();
+        expect(screen.queryByTitle('up-arrow')).toBeNull();
+
+        fireEvent.click(screen.getAllByRole('button')[0]);  // Title Reversed
+
+        expect(screen.queryByTitle('down-arrow')).toBeNull();
+        expect(screen.queryByTitle('up-arrow')).toBeInTheDocument();
+
+        fireEvent.click(screen.getAllByRole('button')[3]);  // Comment
+
+        expect(screen.queryByTitle('down-arrow')).toBeInTheDocument();
+        expect(screen.queryByTitle('up-arrow')).toBeNull();
+
+        fireEvent.click(screen.getAllByRole('button')[3]);  // Comment Reversed
+
+        expect(screen.queryByTitle('down-arrow')).toBeNull();
+        expect(screen.queryByTitle('up-arrow')).toBeInTheDocument();
     });
 
     it('renders snapshot', () => {
@@ -393,6 +420,45 @@ describe('App', () => {
             screen.queryByText('Dan Abramov, Andrew Clark')
         ).toBeNull();
         expect(screen.queryByText('Brendan Eich')).toBeInTheDocument();
+    });
+
+    it('sorts the list', async () => {
+        const promise = Promise.resolve({
+            data: {
+                hits: stories,
+            },
+        });
+
+        axios.get.mockImplementationOnce(() => promise);
+
+        render(<App/>);
+
+        await waitFor(async () => await promise);
+
+        const reactElement = screen.getByText('React');
+        const reduxElement = screen.getByText('Redux');
+
+        expect(reactElement.compareDocumentPosition(reduxElement)).toBe(4);
+
+        fireEvent.click(screen.getAllByRole('button')[2]);  // Author
+        expect(reactElement.compareDocumentPosition(reduxElement)).toBe(2);
+        fireEvent.click(screen.getAllByRole('button')[2]);  // Author Reverse
+        expect(reactElement.compareDocumentPosition(reduxElement)).toBe(4);
+
+        fireEvent.click(screen.getAllByRole('button')[1]);  // Title
+        expect(reactElement.compareDocumentPosition(reduxElement)).toBe(4);
+        fireEvent.click(screen.getAllByRole('button')[1]);  // Title Reverse
+        expect(reactElement.compareDocumentPosition(reduxElement)).toBe(2);
+
+        fireEvent.click(screen.getAllByRole('button')[3]);  // Comments
+        expect(reactElement.compareDocumentPosition(reduxElement)).toBe(4);
+        fireEvent.click(screen.getAllByRole('button')[3]);  // Comments Reverse
+        expect(reactElement.compareDocumentPosition(reduxElement)).toBe(2);
+
+        fireEvent.click(screen.getAllByRole('button')[4]);  // Points
+        expect(reactElement.compareDocumentPosition(reduxElement)).toBe(2);
+        fireEvent.click(screen.getAllByRole('button')[4]);  // Points Reverse
+        expect(reactElement.compareDocumentPosition(reduxElement)).toBe(4);
     });
 });
 // ----------------------- End Integration Tests ---------------------------- //

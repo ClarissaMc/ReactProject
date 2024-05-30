@@ -73,6 +73,7 @@ exports[`Item > renders snapshot 1`] = `
 exports[`List > renders snapshot 1`] = `
 <ul>
   <li
+    class="header"
     style="display: flex;"
   >
     <span

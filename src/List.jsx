@@ -2,6 +2,8 @@ import * as React from 'react';
 import { sortBy } from 'lodash';
 
 import Check from './check.svg?react';
+import UpArrow from './up-arrow.svg?react';
+import DownArrow from './down-arrow.svg?react';
 
 const SORTS = {
     NONE: (list) => list,
@@ -13,7 +15,10 @@ const SORTS = {
 
 const List = React.memo(
     ({ list, onRemoveItem }) => {
-    const [sort, setSort] = React.useState('NONE');
+    const [sort, setSort] = React.useState({
+        sortKey: 'NONE',
+        isReverse: false,
+    });
 
     const handleSort = (sortKey) => {
         const sortButtons = document.getElementsByClassName('button_sort');
@@ -23,15 +28,23 @@ const List = React.memo(
             else if (sortButtons[i].classList.contains('active_sort'))
                 sortButtons[i].classList.remove('active_sort');
         }
-        setSort(sortKey);
+
+        const isReverse = sort.sortKey === sortKey && !sort.isReverse;
+        setSort({ sortKey, isReverse });
     };
 
-    const sortFunction = SORTS[sort];
-    const sortedList = sortFunction(list);
+    const sortFunction = SORTS[sort.sortKey];
+    const sortedList = sort.isReverse
+        ? sortFunction(list).reverse()
+        : sortFunction(list);
+    
+    var sortDirection = sort.isReverse
+        ? ( <UpArrow title="up-arrow" height="18px" width="18px"/> )
+        : ( <DownArrow title="down-arrow" height="18px" width="18px"/> );
 
     return (
         <ul>
-            <li style={{ display: 'flex' }}>
+            <li className='header' style={{ display: 'flex' }}>
                 <span style={{ width: '40%' }}>
                     <button 
                         type="button" 
@@ -40,6 +53,7 @@ const List = React.memo(
                     >
                         Title
                     </button>
+                    { sort.sortKey === 'TITLE' && sortDirection }
                 </span>
                 <span style={{ width: '30%' }}>
                     <button
@@ -49,6 +63,7 @@ const List = React.memo(
                     >
                         Author
                     </button>
+                    { sort.sortKey === 'AUTHOR' && sortDirection }
                 </span>
                 <span style={{ width: '10%' }}>
                     <button
@@ -58,6 +73,7 @@ const List = React.memo(
                     >
                         Comments
                     </button>
+                    { sort.sortKey === 'COMMENT' && sortDirection }
                 </span>
                 <span style={{ width: '10%' }}>
                     <button
@@ -67,6 +83,7 @@ const List = React.memo(
                     >
                         Points
                     </button>
+                    { sort.sortKey === 'POINT' && sortDirection }
                 </span>
                 <span style={{ width: '10%' }}>Actions</span>
             </li>
