@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { sortBy } from 'lodash';
 
-import Check from './check.svg?react';
-import UpArrow from './up-arrow.svg?react';
-import DownArrow from './down-arrow.svg?react';
+import Check from './assets/check.svg?react';
+import UpArrow from './assets/up-arrow.svg?react';
+import DownArrow from './assets/down-arrow.svg?react';
 
 const SORTS = {
     NONE: (list) => list,

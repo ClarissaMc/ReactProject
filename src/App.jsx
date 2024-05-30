@@ -4,7 +4,7 @@ import axios from 'axios';
 import { SearchForm } from './SearchForm';
 import { List } from './List';
 
-import './App.css';
+import './styles/App.css';
 
 const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
 
