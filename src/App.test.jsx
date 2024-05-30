@@ -223,10 +223,36 @@ describe('List', () => {
         expect(screen.getByText('Redux')).toBeInTheDocument();
     });
 
+    it('renders the sort buttons', () => {
+        render(<List {...listProps}/>);
+        expect(screen.getAllByRole('button').length).toBe(6);
+        expect(screen.getByText('Title')).toBeInTheDocument();
+        expect(screen.getByText('Author')).toBeInTheDocument();
+        expect(screen.getByText('Comments')).toBeInTheDocument();
+        expect(screen.getByText('Points')).toBeInTheDocument();
+        expect(screen.getByText('Actions')).toBeInTheDocument();
+    });
+
+    it('sort buttons fire', () => {
+        const {container } = render(<List {...listProps}/>);
+
+        expect(container.getElementsByClassName('active_sort').length).toBe(0);
+
+        fireEvent.click(screen.getAllByRole('button')[1]);  // Title
+
+        expect(container.getElementsByClassName('active_sort').length).toBe(1);
+        expect(container.getElementsByClassName('active_sort')[0].classList.contains('TITLE'));
+
+        fireEvent.click(screen.getAllByRole('button')[2]);  // Author
+
+        expect(container.getElementsByClassName('active_sort').length).toBe(1);
+        expect(container.getElementsByClassName('active_sort')[0].classList.contains('AUTHOR'));
+    });
+
     it('renders snapshot', () => {
         const { container } = render(<List {...listProps}/>);
         expect(container.firstChild).toMatchSnapshot();
-    })
+    });
 });
 // ------------------------- End Unit Tests --------------------------------- //
 
