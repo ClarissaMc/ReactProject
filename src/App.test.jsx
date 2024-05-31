@@ -14,6 +14,7 @@ import App, {
 
 import { Item } from './List';
 import { InputWithLabel } from './InputWithLabel';
+import { LastSearches } from './LastSearches';
 
 import axios from 'axios';
 
@@ -281,6 +282,38 @@ describe('List', () => {
         expect(container.firstChild).toMatchSnapshot();
     });
 });
+
+describe('LastSearches', () => {
+    const lastSearches = [
+        'React',
+        'Redux',
+        'Java',
+        'Python',
+        'C',
+    ]
+    const lastSearchesProps = { lastSearches: lastSearches, onLastSearch: vi.fn() };
+
+    it('renders the buttons', () => {
+        render(<LastSearches {...lastSearchesProps}/>);
+        expect(screen.getAllByRole('button').length).toBe(5);
+        expect(screen.getByText('React')).toBeInTheDocument();
+        expect(screen.getByText('Redux')).toBeInTheDocument();
+        expect(screen.getByText('Java')).toBeInTheDocument();
+        expect(screen.getByText('Python')).toBeInTheDocument();
+        expect(screen.getByText('C')).toBeInTheDocument();
+    });
+
+    it('calls onLastSearch when button clicked', () => {
+        render(<LastSearches {...lastSearchesProps}/>);
+        fireEvent.click(screen.getByText('Java'));
+        expect(lastSearchesProps.onLastSearch).toHaveBeenCalledTimes(1);
+    });
+
+    it('renders snapshot', () => {
+        const { container } = render(<LastSearches {...lastSearchesProps}/>);
+        expect(container.firstChild).toMatchSnapshot();
+    });
+});
 // ------------------------- End Unit Tests --------------------------------- //
 
 // ----------------------- Integration Tests -------------------------------- //
@@ -459,6 +492,81 @@ describe('App', () => {
         expect(reactElement.compareDocumentPosition(reduxElement)).toBe(2);
         fireEvent.click(screen.getAllByRole('button')[4]);  // Points Reverse
         expect(reactElement.compareDocumentPosition(reduxElement)).toBe(4);
+    });
+
+    it('updates InputWithLabel when LastSearches button clicked', async () => {
+        const promise = Promise.resolve({
+            data: {
+                hits: stories,
+            },
+        });
+
+        axios.get.mockImplementationOnce(() => promise);
+
+        render(<App/>);
+
+        await waitFor(async () => await promise);
+
+        expect(screen.getByDisplayValue('JavaScript')).toBeInTheDocument();
+
+        fireEvent.click(screen.getByText('Submit'));    // 'JavaScript' search
+        fireEvent.change(screen.getByDisplayValue('JavaScript'), {
+            target: { value: 'React' },
+        });
+        fireEvent.click(screen.getByText('Submit'));    // 'React' search
+
+        expect(screen.getByDisplayValue('React')).toBeInTheDocument();
+        expect(screen.getByText('JavaScript')).toBeInTheDocument();
+
+        fireEvent.click(screen.getByText('JavaScript')); // 'JavaScript' search
+
+        expect(screen.getByDisplayValue('JavaScript')).toBeInTheDocument();
+    });
+
+    it('adds new last search button', async () => {
+        const promise = Promise.resolve({
+            data: {
+                hits: stories,
+            },
+        });
+
+        axios.get.mockImplementationOnce(() => promise);
+
+        render(<App/>);
+
+        await waitFor(async () => await promise);
+
+        expect(screen.getByDisplayValue('JavaScript')).toBeInTheDocument();
+
+        fireEvent.click(screen.getByText('Submit'));    // 'JavaScript' search
+        fireEvent.change(screen.getByDisplayValue('JavaScript'), {
+            target: { value: 'React' },
+        });
+        fireEvent.click(screen.getByText('Submit'));    // 'React' search
+
+        expect(screen.queryAllByText('JavaScript').length).toBe(1);
+        expect(screen.queryAllByText('React').length).toBe(0);
+
+        fireEvent.click(screen.getByText('Submit'));    // 'React' search
+
+        expect(screen.queryAllByText('JavaScript').length).toBe(1);
+        expect(screen.queryAllByText('React').length).toBe(0);
+
+        fireEvent.change(screen.getByDisplayValue('React'), {
+            target: { value: 'JavaScript' },
+        });
+        fireEvent.click(screen.getByText('Submit'));    // 'JavaScript' search
+
+        expect(screen.queryAllByText('JavaScript').length).toBe(1);
+        expect(screen.queryAllByText('React').length).toBe(1);
+
+        fireEvent.change(screen.getByDisplayValue('JavaScript'), {
+            target: { value: 'Python' },
+        });
+        fireEvent.click(screen.getByText('Submit'));    // 'Python' search
+
+        expect(screen.queryAllByText('JavaScript').length).toBe(2);
+        expect(screen.queryAllByText('React').length).toBe(2);  // last search & story
     });
 });
 // ----------------------- End Integration Tests ---------------------------- //

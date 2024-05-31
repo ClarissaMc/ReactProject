@@ -70,6 +70,14 @@ exports[`Item > renders snapshot 1`] = `
 </li>
 `;
 
+exports[`LastSearches > renders snapshot 1`] = `
+<button
+  type="button"
+>
+  React
+</button>
+`;
+
 exports[`List > renders snapshot 1`] = `
 <ul>
   <li
