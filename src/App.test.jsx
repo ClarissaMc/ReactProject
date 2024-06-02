@@ -73,13 +73,14 @@ describe('storiesReducer', () => {
     });
 
     it('successfully fetches stories', () => {
-        const action = { type: 'STORIES_FETCH_SUCCESS', payload: stories };
-        const state = { data: [], isLoading: true, isError: false };
+        const action = { type: 'STORIES_FETCH_SUCCESS', payload: { list: stories, page: 0 } };
+        const state = { data: [], page: 0, isLoading: true, isError: false };
 
         const newState = storiesReducer(state, action);
 
         const expectedState = {
             data: stories,
+            page: 0,
             isLoading: false,
             isError: false,
         };
@@ -368,12 +369,12 @@ describe('App', () => {
 
         await waitFor(async () => await promise);
 
-        expect(screen.getAllByRole('button').length).toBe(7);
+        expect(screen.getAllByRole('button').length).toBe(8);
         expect(screen.getByText('Jordan Walke')).toBeInTheDocument();
 
         fireEvent.click(screen.getAllByRole('button')[5]);
 
-        expect(screen.getAllByRole('button').length).toBe(6);
+        expect(screen.getAllByRole('button').length).toBe(7);
         expect(screen.queryByText('Jordan Walke')).toBeNull();
     });
 
@@ -383,6 +384,7 @@ describe('App', () => {
         const reactPromise = Promise.resolve({
             data: {
                 hits: stories,
+                page: 0,
             },
         });
 
@@ -398,6 +400,7 @@ describe('App', () => {
         const javascriptPromise = Promise.resolve({
             data: {
                 hits: [anotherStory],
+                page: 0,
             },
         });
 
@@ -527,6 +530,7 @@ describe('App', () => {
         const promise = Promise.resolve({
             data: {
                 hits: stories,
+                page: 0,
             },
         });
 
@@ -545,12 +549,12 @@ describe('App', () => {
         fireEvent.click(screen.getByText('Submit'));    // 'React' search
 
         expect(screen.queryAllByText('JavaScript').length).toBe(1);
-        expect(screen.queryAllByText('React').length).toBe(0);
+        expect(screen.queryAllByText('React').length).toBe(1);
 
         fireEvent.click(screen.getByText('Submit'));    // 'React' search
 
         expect(screen.queryAllByText('JavaScript').length).toBe(1);
-        expect(screen.queryAllByText('React').length).toBe(0);
+        expect(screen.queryAllByText('React').length).toBe(1);
 
         fireEvent.change(screen.getByDisplayValue('React'), {
             target: { value: 'JavaScript' },
@@ -558,7 +562,7 @@ describe('App', () => {
         fireEvent.click(screen.getByText('Submit'));    // 'JavaScript' search
 
         expect(screen.queryAllByText('JavaScript').length).toBe(1);
-        expect(screen.queryAllByText('React').length).toBe(1);
+        expect(screen.queryAllByText('React').length).toBe(2);
 
         fireEvent.change(screen.getByDisplayValue('JavaScript'), {
             target: { value: 'Python' },
@@ -567,6 +571,23 @@ describe('App', () => {
 
         expect(screen.queryAllByText('JavaScript').length).toBe(2);
         expect(screen.queryAllByText('React').length).toBe(2);  // last search & story
+    });
+
+    it('renders more button', async () => {
+        const promise = Promise.resolve({
+            data: {
+                hits: stories,
+                page: 0,
+            },
+        });
+
+        axios.get.mockImplementationOnce(() => promise);
+
+        render(<App/>);
+
+        await waitFor(async () => await promise);
+
+        expect(screen.queryByText('More')).toBeInTheDocument();
     });
 });
 // ----------------------- End Integration Tests ---------------------------- //

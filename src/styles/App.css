@@ -1,5 +1,6 @@
 .container {
-    height: 100vw;
+    min-height: 100vh;
+    height: 100%;
     padding: 20px;
     background: #83a4d4; /* fallback for old browsers */
     background: linear-gradient(to left, #b6fbff, #83a4d4);
@@ -69,13 +70,30 @@
 }
 
 .button_sort:hover {
-    background-color: #86b9c2;
+    background-color: #171212;
+    color: #ffffff;
     cursor: pointer;
 }
 
 .active_sort {
     background-color: #171212;
     color: #ffffff;
+}
+
+.more_container {
+    display: flex;
+    justify-content: center;
+}
+
+.button_more {
+    background-color: #bef1fa;
+    font-size: 20px;
+}
+
+.button_more:hover {
+    background-color: #171212;
+    color: #ffffff;
+    cursor: pointer;
 }
 
 .search-form {
